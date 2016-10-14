@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphics\Shader.h"
 #include "Bitmap.h"
+#include "PBOTexture.h"
 class Game
 {
 public:
@@ -14,5 +15,6 @@ private:
 	GLuint _vao, _vbo,_ebo, _texture;
 	Bitmap* _bitmap;
 	int _width, _height;
+	PBOTexture * _pboTexture;
 };
 

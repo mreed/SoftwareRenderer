@@ -17,7 +17,7 @@ public:
 	void Init(int width, int height);
 	void MainLoop();
 	void SetWindowFPS();
-	void* GetGLFuncAddress(const char* name);
+	glInfo& GetGLInfo() { return _glInfo; }
 	static void error_callback(int error, const char* description)
 	{
 		fprintf(stderr, "Error %s\n", description);
@@ -38,6 +38,7 @@ private:
 	int _frames;
 	double _lastTime;
 	Game* _game;
+	glInfo _glInfo;
 	
 };
 

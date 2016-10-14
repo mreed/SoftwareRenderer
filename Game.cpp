@@ -69,20 +69,30 @@ void Game::Init(int width, int height)
 	
 	glBindTexture(GL_TEXTURE_2D, 0); // Unbind texture when done, so we won't accidentily mess up our texture.
 
+	_pboTexture = new PBOTexture();
+	_pboTexture->Init(_width,_height,GLFWDisplay::GetInstance().GetGLInfo());
 }
 
 void Game::Update()
 {
-	//_bitmap->Clear(255);
+	/*_bitmap->Clear(255);
 	glBindTexture(GL_TEXTURE_2D, _texture);
-
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, _width, _height, GL_RGBA, GL_UNSIGNED_BYTE, _bitmap->GetData());
-	glBindTexture(GL_TEXTURE_2D, 0);
+	for (int i = 0; i < 200; i++)
+	{
+		for (int j = 0; j < 200; j++)
+		{
+			_bitmap->DrawPixel(j, i, 0xFF0000FF);
+		}
+	}
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, _width, _height, GL_RGBA, GL_UNSIGNED_BYTE, _bitmap->GetData());*/
+	//glBindTexture(GL_TEXTURE_2D, 0);
+	_pboTexture->Update();
 }
 
 void Game::Render()
 {
-	glBindTexture(GL_TEXTURE_2D, _texture);
+	glBindTexture(GL_TEXTURE_2D, _pboTexture->GetTextureId());
+	//glBindTexture(GL_TEXTURE_2D, _texture);
 	_shader->Use();
 	glBindVertexArray(_vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -101,7 +111,9 @@ Game::~Game()
 	if (_shader != NULL)
 		delete _shader;
 	_shader = NULL;
-
+	if (_pboTexture != NULL)
+		delete _pboTexture;
+	_pboTexture = NULL;
 	glDeleteVertexArrays(1, &_vao);
 	glDeleteBuffers(1, &_vbo);
 	glDeleteBuffers(1, &_ebo);

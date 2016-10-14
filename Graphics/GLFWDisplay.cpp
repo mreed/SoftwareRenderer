@@ -5,6 +5,17 @@
 #include "..\glinfo.h"
 
 
+// function pointers for WGL_EXT_swap_control
+#ifdef _WIN32
+typedef BOOL(WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval);
+typedef int (WINAPI * PFNWGLGETSWAPINTERVALEXTPROC) (void);
+PFNWGLSWAPINTERVALEXTPROC pwglSwapIntervalEXT = 0;
+PFNWGLGETSWAPINTERVALEXTPROC pwglGetSwapIntervalEXT = 0;
+#define wglSwapIntervalEXT      pwglSwapIntervalEXT
+#define wglGetSwapIntervalEXT   pwglGetSwapIntervalEXT
+#endif
+
+
 void GLFWDisplay::Init(int width, int height)
 {
 	_width = width;
@@ -41,13 +52,23 @@ void GLFWDisplay::Init(int width, int height)
 	{
 		std::cout << "GLEW Version 3.3 not supported\n";
 	}
-	glInfo glInfo;
-	glInfo.getInfo();
-	glInfo.printSelf();
+	
+	_glInfo.getInfo();
+	_glInfo.printSelf();
 
-	bool (__stdcall *wglSwapIntervalEXT)(int) =(bool(__stdcall *)( int)) GetGLFuncAddress("wglSwapIntervalEXT");
-	if (wglSwapIntervalEXT != nullptr)
-		wglSwapIntervalEXT(0);
+	if (_glInfo.isExtensionSupported("WGL_EXT_swap_control"))
+	{
+		// get pointers to WGL functions
+		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+		wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
+		if (wglSwapIntervalEXT && wglGetSwapIntervalEXT)
+		{
+			// disable v-sync
+			wglSwapIntervalEXT(0);
+			std::cout << "Video card supports WGL_EXT_swap_control." << std::endl;
+		}
+	}
+
 	_game->Init(_width,_height);
 
 }
@@ -89,19 +110,6 @@ void GLFWDisplay::SetWindowFPS()
 	}
 }
 
-void * GLFWDisplay::GetGLFuncAddress(const char * name)
-{
-	void *p = (void *)wglGetProcAddress(name);
-	if (p == 0 ||
-		(p == (void*)0x1) || (p == (void*)0x2) || (p == (void*)0x3) ||
-		(p == (void*)-1))
-	{
-		HMODULE module = LoadLibraryA("opengl32.dll");
-		p = (void *)GetProcAddress(module, name);
-	}
-
-	return p;
-}
 
 
 GLFWDisplay::GLFWDisplay()
