@@ -23,6 +23,7 @@ RawBlameHistory
 *.user
 *.userosscache
 *.sln.docstates
+*.o
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -284,4 +285,4 @@ __pycache__/
 # Cake - Uncomment if you are using it
 # tools/
 Contact GitHub API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy Security Status Help
+Â© 2016 GitHub, Inc. Terms Privacy Security Status Help
