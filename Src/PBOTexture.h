@@ -1,5 +1,6 @@
 #pragma once
-#include <GL\GL.h>
+
+#include <glm/glm.hpp>
 #include "glInfo.h"
 class PBOTexture
 {

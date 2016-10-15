@@ -17,13 +17,13 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
-
+#include "stdafx.h"
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
 #else
 #include <GL/gl.h>
 #endif
-#include "stdafx.h"
+
 #include <iostream>
 #include <sstream>
 #include <iomanip>

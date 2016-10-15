@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "PBOTexture.h"
-#include <Windows.h>
+#ifdef _WIN32
+//#include <Windows.h>
 
 // function pointers for PBO Extension
 // Windows needs to get function pointers from ICD OpenGL drivers,
 // because opengl32.dll does not support extensions higher than v1.1.
-#ifdef _WIN32
+
 PFNGLGENBUFFERSARBPROC pglGenBuffersARB = 0;                     // VBO Name Generation Procedure
 PFNGLBINDBUFFERARBPROC pglBindBufferARB = 0;                     // VBO Bind Procedure
 PFNGLBUFFERDATAARBPROC pglBufferDataARB = 0;                     // VBO Data Loading Procedure

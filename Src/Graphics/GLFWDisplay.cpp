@@ -1,12 +1,12 @@
-#include "stdafx.h"
+#include "../stdafx.h"
 #include "GLFWDisplay.h"
-#include <Windows.h>
-#include "..\glext.h"
-#include "..\glinfo.h"
 
+#include "../glext.h"
+#include "../glinfo.h"
 
-// function pointers for WGL_EXT_swap_control
 #ifdef _WIN32
+#include <Windows.h>
+
 typedef BOOL(WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval);
 typedef int (WINAPI * PFNWGLGETSWAPINTERVALEXTPROC) (void);
 PFNWGLSWAPINTERVALEXTPROC pwglSwapIntervalEXT = 0;
@@ -55,7 +55,7 @@ void GLFWDisplay::Init(int width, int height)
 	
 	_glInfo.getInfo();
 	_glInfo.printSelf();
-
+#ifdef _WIN32
 	if (_glInfo.isExtensionSupported("WGL_EXT_swap_control"))
 	{
 		// get pointers to WGL functions
@@ -68,6 +68,7 @@ void GLFWDisplay::Init(int width, int height)
 			std::cout << "Video card supports WGL_EXT_swap_control." << std::endl;
 		}
 	}
+#endif
 
 	_game->Init(_width,_height);
 

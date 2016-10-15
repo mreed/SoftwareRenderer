@@ -8,12 +8,13 @@
 #include "targetver.h"
 
 #include <stdio.h>
-#include <tchar.h>
-#include "glm\glm.hpp"
-#include "Graphics\GLFWDisplay.h"
+//#include <tchar.h>
+#include "GL/glew.h"
+#include "glm/glm.hpp"
+#include "Graphics/GLFWDisplay.h"
 #include <iostream>
 #include "Game.h"
-#include "Graphics\Shader.h"
+#include "Graphics/Shader.h"
 
 
 // TODO: reference additional headers your program requires here

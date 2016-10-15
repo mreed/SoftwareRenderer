@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BITMAP_H_
+#define BITMAP_H_
 //#define byte unsigned char
 class Bitmap
 {
@@ -16,3 +17,4 @@ private:
 	unsigned char* _buffer;
 };
 
+#endif
