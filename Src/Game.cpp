@@ -84,7 +84,7 @@ void Game::Update()
 			_bitmap->DrawPixel(j, i, 0xFF0000FF);
 		}
 	}
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, _width, _height, GL_RGBA, GL_UNSIGNED_BYTE, _bitmap->GetData());*/
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, _width, _height, GL_RGBA, GL_UNSIGNED_BYTE, _bitmap->GetData()); */
 	//glBindTexture(GL_TEXTURE_2D, 0);
 	_pboTexture->Update();
 }
@@ -92,7 +92,7 @@ void Game::Update()
 void Game::Render()
 {
 	glBindTexture(GL_TEXTURE_2D, _pboTexture->GetTextureId());
-	//glBindTexture(GL_TEXTURE_2D, _texture);
+//	glBindTexture(GL_TEXTURE_2D, _texture);
 	_shader->Use();
 	glBindVertexArray(_vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

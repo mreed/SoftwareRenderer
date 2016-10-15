@@ -27,8 +27,13 @@ void GLFWDisplay::Init(int width, int height)
 	{
 		exit(EXIT_FAILURE);
 	}
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,3);
+
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT,GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    // Make the window resize-able.
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 	_window = glfwCreateWindow(_width, _height, "Software Render", NULL, NULL);
 	if (!_window)
@@ -68,6 +73,11 @@ void GLFWDisplay::Init(int width, int height)
 			std::cout << "Video card supports WGL_EXT_swap_control." << std::endl;
 		}
 	}
+#elif __APPLE__
+GLint sync = 1;
+// ctx must be a valid context
+glfwSwapInterval(0);
+
 #endif
 
 	_game->Init(_width,_height);
