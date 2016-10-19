@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "PBOTexture.h"
 #ifdef _WIN32
-//#include <Windows.h>
+#include <Windows.h>
 
 // function pointers for PBO Extension
 // Windows needs to get function pointers from ICD OpenGL drivers,
